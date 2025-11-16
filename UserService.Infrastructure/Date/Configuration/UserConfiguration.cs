@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UserService.Domain.Model;
+using UserService.Domain.Models;
 
 namespace UserService.Infrastructure.Date.Configuration
 {
