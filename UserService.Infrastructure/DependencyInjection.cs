@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using UserService.Domain.Interfaces;
 using UserService.Infrastructure.Date;
+using UserService.Infrastructure.Repositories;
 
 namespace UserService.Infrastructure
 {
@@ -20,6 +22,9 @@ namespace UserService.Infrastructure
                     default: throw new Exception($"Unknown database provider: {provider}");
                 }
             });
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
             return services;
         }
