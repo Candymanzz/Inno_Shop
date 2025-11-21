@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace UserService.Application.DTOs.AuthDTOs.RequestDTOs
 {
-    public record LoginRequest
+    public record RegisterRequest
     (
         string Email,
-        string Password
+        string Password,
+        string FullName
     );
 }

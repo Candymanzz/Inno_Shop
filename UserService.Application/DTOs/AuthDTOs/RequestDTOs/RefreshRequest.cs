@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UserService.Application.DTOs.AuthDTOs.RequestDTOs
 {
-    internal record RefreshRequest
+    public record RefreshRequest
     (
         string RefreshToken
     );
