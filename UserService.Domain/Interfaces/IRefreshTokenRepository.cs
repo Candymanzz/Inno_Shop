@@ -12,6 +12,8 @@ namespace UserService.Domain.Interfaces
         Task AddAsync(RefreshToken refreshToken);
         Task<RefreshToken?> GetByTokenAsync(string token);
         Task UpdateAsync(RefreshToken token);
-        Task<IEnumerable<RefreshToken>> GetByUserIdAsync(Guid userId);
+        Task<IEnumerable<RefreshToken>> GetRefreshTokenByUserIdAsync(Guid userId);
+        Task DeleteAsync(RefreshToken refreshToken);
+        Task SaveChangesAsync();
     }
 }

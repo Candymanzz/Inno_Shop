@@ -6,9 +6,10 @@ namespace UserService.Domain.Interfaces
     {
         Task<User?> GetByIdAsync(Guid id);
         Task<User?> GetByEmailAsync(string email);
-        Task AddUserAsync(User user);
-        Task UpdateUserAsync(User user);
-        Task DeleteUserAsync(Guid id);
+        Task AddAsync(User user);
+        Task UpdateAsync(User user);
+        Task DeleteAsync(User user);
+        Task SaveChangesAsync();
         Task<(IEnumerable<User> Items, int Total)> GetPagedAsync(int page, int pageSize, string? q = null);
     }
 }
