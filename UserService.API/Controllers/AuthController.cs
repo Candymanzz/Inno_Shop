@@ -36,6 +36,9 @@ namespace UserService.API.Controllers
                 loginRequest.Email,
                 loginRequest.Password
                 ));
+
+            Response.Cookies.Append("a-token-cookies", result.AccessToken);
+
             return Ok(result);
         }
 
@@ -44,6 +47,13 @@ namespace UserService.API.Controllers
         {
             AuthResponse result = await mediator.Send(new RefreshTokenCommand(refreshRequest.RefreshToken));
             return Ok(result);
+        }
+
+        [HttpGet("confirm-email")]
+        public async Task<IActionResult> ConfirmEmail([FromQuery] string token)
+        {
+            var result = await mediator.Send(new ConfirmEmailCommand(token));
+            return Ok(new { message = result });
         }
     }
 }
