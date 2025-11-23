@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using UserService.Application.DTOs.AuthDTOs.ResponseDTOs;
+using UserService.Application.Services;
 using UserService.Domain.Interfaces;
 using UserService.Domain.Models;
 
@@ -8,18 +9,22 @@ namespace UserService.Application.Commands.Users
     public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, AuthResponse>
     {
         private readonly IUserRepository userRepository;
+        private readonly IEmailConfirmationRepository emailConfirmationRepository;
+        private readonly IEmailSender emailSender;
         private readonly IPasswordHasher passwordHasher;
         private readonly ITokenService tokenService;
         private readonly IRefreshTokenRepository refreshTokenRepository;
-        //private readonly IEmailConfirmationRepository emailConfirmationRepository;
-        //private readonly 
 
         public RegisterUserHandler(IUserRepository userRepository,
+            IEmailConfirmationRepository emailConfirmationRepository,
+            IEmailSender emailSender,
             IPasswordHasher passwordHasher,
             ITokenService tokenService,
             IRefreshTokenRepository refreshTokenRepository)
         {
             this.userRepository = userRepository;
+            this.emailConfirmationRepository = emailConfirmationRepository;
+            this.emailSender = emailSender;
             this.passwordHasher = passwordHasher;
             this.tokenService = tokenService;
             this.refreshTokenRepository = refreshTokenRepository;
@@ -31,7 +36,7 @@ namespace UserService.Application.Commands.Users
 
             if (existing != null)
             {
-                throw new Exception("User already exists");
+                throw new Exception("User already exists"); //переделать потом
             }
 
             string passwordHash = passwordHasher.Hash(request.Password);
@@ -40,7 +45,8 @@ namespace UserService.Application.Commands.Users
             {
                 Email = request.Email,
                 PasswordHash = passwordHash,
-                FullName = request.FullName
+                FullName = request.FullName,
+                Role = "User"
             };
 
             await userRepository.AddAsync(user);
@@ -50,6 +56,17 @@ namespace UserService.Application.Commands.Users
 
             await refreshTokenRepository.AddAsync(refreshToken);
             await refreshTokenRepository.SaveChangesAsync();
+
+            EmailConfirmation confirmation = new EmailConfirmation
+            {
+                UserId = user.Id,
+                Token = Guid.NewGuid().ToString("N"),
+                ExpiresAt = DateTime.UtcNow.AddHours(24)
+            };
+
+            await emailConfirmationRepository.AddAsync(confirmation);
+
+            await emailSender.SendConfirmationEmailAsync(request.Email, confirmation.Token);
 
             return new AuthResponse(accessToken, refreshToken.Token);
         }

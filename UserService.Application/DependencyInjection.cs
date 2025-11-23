@@ -13,9 +13,15 @@ namespace UserService.Application
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) //перерегать все ди
         {
             services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
+            services.Configure<SmtpOptions>(configuration.GetSection(nameof(SmtpOptions)));
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<IEmailSender, DebugEmailSender>();
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
+            });
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             return services;
         }

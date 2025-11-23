@@ -38,6 +38,11 @@ namespace UserService.Application.Commands.Users
                 throw new Exception("Invalid credentials");
             }
 
+            if (!user.EmailConfirmed)
+            {
+                throw new Exception("Email not confirmed");
+            }
+
             string accessToken = tokenService.GenereateAccessToken(user);
             RefreshToken refreshToken = tokenService.GetRefreshToken(user.Id, TimeSpan.FromDays(10));
 

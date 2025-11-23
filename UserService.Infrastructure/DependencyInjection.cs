@@ -25,6 +25,7 @@ namespace UserService.Infrastructure
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IEmailConfirmationRepository, EmailConfirmationRepository>();
 
             return services;
         }

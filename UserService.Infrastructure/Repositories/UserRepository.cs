@@ -26,7 +26,6 @@ namespace UserService.Infrastructure.Repositories
             await SaveChangesAsync();
         }
 
-
         public async Task<User?> GetByEmailAsync(string email)
         {
             return await appDbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
@@ -37,7 +36,7 @@ namespace UserService.Infrastructure.Repositories
             return await appDbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public async Task<(IEnumerable<User> Items, int Total)> GetPagedAsync(int page, int pageSize, string? q = null)
+        public async Task<(IEnumerable<User> Items, int Total)> GetPagedAsync(int page, int pageSize, string? q = null) //ref
         {
             IQueryable<User> query = appDbContext.Users;
 

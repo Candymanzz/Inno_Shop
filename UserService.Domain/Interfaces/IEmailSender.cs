@@ -2,7 +2,6 @@
 {
     public interface IEmailSender
     {
-        Task SendAsync(string email, );
-
+        Task SendConfirmationEmailAsync(string to, string token);
     }
 }
