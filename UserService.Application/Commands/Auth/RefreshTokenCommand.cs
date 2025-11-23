@@ -3,8 +3,8 @@ using UserService.Application.DTOs.AuthDTOs.ResponseDTOs;
 
 namespace UserService.Application.Commands.Auth
 {
-    public class RefreshTokenCommand : IRequest<AuthResponse>
-    {
-        public string RefreshToken { get; set; } = string.Empty;
-    }
+    public record RefreshTokenCommand 
+    (
+        string RefreshToken
+    ) : IRequest<AuthResponse>;
 }
