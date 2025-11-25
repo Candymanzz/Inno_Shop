@@ -4,6 +4,9 @@ using UserService.Application.Commands.Auth;
 using UserService.Application.Commands.Users;
 using UserService.Application.DTOs.AuthDTOs.RequestDTOs;
 using UserService.Application.DTOs.AuthDTOs.ResponseDTOs;
+using UserService.Application.DTOs.UserDTOs;
+using UserService.Application.Services;
+using UserService.Domain.Interfaces;
 
 namespace UserService.API.Controllers
 {
@@ -54,6 +57,20 @@ namespace UserService.API.Controllers
         {
             var result = await mediator.Send(new ConfirmEmailCommand(token));
             return Ok(new { message = result });
+        }
+
+        [HttpPost("send-reset-token")]
+        public async Task<IActionResult> SendResetToken([FromBody] SendResetTokenRequest request)
+        {
+            await mediator.Send(new SendResetTokenCommand(request.Email));
+            return Ok();
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+        {
+            await mediator.Send(new ResetPasswordCommand(request.Token, request.NewPassword));
+            return Ok();
         }
     }
 }
