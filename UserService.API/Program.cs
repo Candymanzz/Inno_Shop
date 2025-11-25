@@ -2,6 +2,8 @@ using UserService.API.Extensions;
 using UserService.Application;
 using UserService.Application.Services;
 using UserService.Infrastructure;
+using UserService.Domain.Interfaces;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,8 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.Configure<JwtOptions>(
     builder.Configuration.GetSection("JwtOptions"));
+builder.Services.Configure<FrontendOptions>(
+    builder.Configuration.GetSection("Frontend"));
 
 builder.Services.AddApiAuthentication(builder.Configuration);
 
