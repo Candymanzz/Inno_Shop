@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UserService.Infrastructure.Date;
@@ -11,9 +12,11 @@ using UserService.Infrastructure.Date;
 namespace UserService.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251125223757_PasswordReset")]
+    partial class PasswordReset
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,15 +44,9 @@ namespace UserService.Infrastructure.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("UserId1")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1")
-                        .IsUnique();
 
                     b.ToTable("EmailConfirmations");
                 });
@@ -65,13 +62,10 @@ namespace UserService.Infrastructure.Migrations
 
                     b.Property<string>("Token")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("Used")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false);
+                        .HasColumnType("boolean");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -160,17 +154,13 @@ namespace UserService.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UserService.Domain.Models.User", null)
-                        .WithOne("EmailConfirmation")
-                        .HasForeignKey("UserService.Domain.Models.EmailConfirmation", "UserId1");
-
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("UserService.Domain.Models.PasswordResetToken", b =>
                 {
                     b.HasOne("UserService.Domain.Models.User", "User")
-                        .WithMany("PasswordResetTokens")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -191,11 +181,6 @@ namespace UserService.Infrastructure.Migrations
 
             modelBuilder.Entity("UserService.Domain.Models.User", b =>
                 {
-                    b.Navigation("EmailConfirmation")
-                        .IsRequired();
-
-                    b.Navigation("PasswordResetTokens");
-
                     b.Navigation("RefreshTokens");
                 });
 #pragma warning restore 612, 618

@@ -9,6 +9,7 @@ namespace UserService.Infrastructure.Date
         public DbSet<User> Users { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<EmailConfirmation> EmailConfirmations { get; set; }
+        public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) 
         {
@@ -19,6 +20,7 @@ namespace UserService.Infrastructure.Date
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
             modelBuilder.ApplyConfiguration(new EmailConfirmationConfiguration());
+            modelBuilder.ApplyConfiguration(new PasswordReserTokenConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
