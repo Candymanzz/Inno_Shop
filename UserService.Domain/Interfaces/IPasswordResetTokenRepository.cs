@@ -6,6 +6,7 @@ namespace UserService.Domain.Interfaces
     {
         Task AddAsync(PasswordResetToken token);
         Task<PasswordResetToken?> GetByTokenAsync(string token);
-        Task UpdateAsync(PasswordResetToken token);
+        Task SaveChangesAsync();
+        Task DeleteAsync(PasswordResetToken token);
     }
 }
