@@ -18,6 +18,7 @@ namespace UserService.Application
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddScoped<IEmailSender, DebugEmailSender>();
+            services.AddScoped<PasswordResetService>();
             services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
