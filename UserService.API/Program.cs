@@ -2,7 +2,6 @@ using UserService.API.Extensions;
 using UserService.Application;
 using UserService.Application.Services;
 using UserService.Infrastructure;
-using UserService.Domain.Interfaces;
 
 
 var builder = WebApplication.CreateBuilder(args);
