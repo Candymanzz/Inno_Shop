@@ -1,4 +1,5 @@
-﻿using ProductService.Domain.Models;
+﻿using ProductService.Domain.Common;
+using ProductService.Domain.Models;
 
 namespace ProductService.Domain.Interfaces
 {
@@ -8,7 +9,7 @@ namespace ProductService.Domain.Interfaces
         Task UpdateAsync(Product product);
         Task DeleteAsync(Guid id);
         Task<Product?> GetByIdAsync(Guid id);
-        Task<(IEnumerable<Product> Items, int Total)> GetPagedAsync(int page, int pageSize, string? q = null);
+        Task<PagedResult<Product>> GetPagedAsync(int page, int pageSize, string? q = null);
         Task<IEnumerable<Product>> SearchAsync(
             string? title = null,
             Guid? userId = null,
@@ -19,5 +20,6 @@ namespace ProductService.Domain.Interfaces
             DateTime? createdAfter = null,
             DateTime? createdBefore = null); //может можно по другому 
         Task SaveChangesAsync();
+        Task ChangeUserProductsVisibilityAsync(Guid id, bool isVisible);
     }
 }

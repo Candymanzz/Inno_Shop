@@ -9,5 +9,6 @@
         public int Quantity { get; set; }
         public Guid UserId { get; set; }
         public DateTime CreateAt { get; set; } = DateTime.Now;
+        public bool IsVisible { get; set; } = true;
     }
 }

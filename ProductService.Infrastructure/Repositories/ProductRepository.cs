@@ -3,6 +3,8 @@ using ProductService.Domain.Interfaces;
 using ProductService.Domain.Models;
 using ProductService.Infrastructure.Date;
 
+using ProductService.Domain.Common;
+
 namespace ProductService.Infrastructure.Repositories
 {
     internal class ProductRepository : IProductRepository
@@ -35,24 +37,28 @@ namespace ProductService.Infrastructure.Repositories
             return await context.Products.FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<(IEnumerable<Product> Items, int Total)> GetPagedAsync(int page, int pageSize, string? q = null)
+        public async Task<PagedResult<Product>> GetPagedAsync(int page, int pageSize, string? q = null)
         {
             IQueryable<Product> query = context.Products.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(q))
-            {
                 query = query.Where(p => p.Title.Contains(q) || p.Description.Contains(q));
-            }
 
             int total = await query.CountAsync();
             List<Product> items = await query
+                .Where(p => p.IsVisible == true)
                 .OrderByDescending(p => p.CreateAt)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
 
-            return (items, total);
+            return new PagedResult<Product>
+            {
+                Items = items,
+                Total = total
+            };
         }
+
 
         public async Task<IEnumerable<Product>> SearchAsync(
             string? title = null, 
@@ -90,7 +96,7 @@ namespace ProductService.Infrastructure.Repositories
             if (createdBefore.HasValue)
                 query = query.Where(p => p.CreateAt <= createdBefore.Value);
 
-            return await query.OrderByDescending(p => p.CreateAt).ToListAsync();
+            return await query.Where(p => p.IsVisible == true).OrderByDescending(p => p.CreateAt).ToListAsync();
         }
 
         public async Task UpdateAsync(Product product)
@@ -102,6 +108,16 @@ namespace ProductService.Infrastructure.Repositories
         public async Task SaveChangesAsync()
         {
             await context.SaveChangesAsync();
+        }
+
+        public async Task ChangeUserProductsVisibilityAsync(Guid id, bool isVisible)
+        {
+            await context.Products
+                .Where(p => p.UserId == id)
+                .ExecuteUpdateAsync(p =>
+                    p.SetProperty(x => x.IsVisible, isVisible)
+                );
+            await SaveChangesAsync();
         }
     }
 }
