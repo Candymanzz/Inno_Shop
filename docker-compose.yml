@@ -1,0 +1,60 @@
+services:
+  userservice:
+    build:
+      context: .
+      dockerfile: UserService.API/Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: "Host=postgres;Database=UserServiceDb;Username=postgres;Password=root"
+      DatabaseProvider: "PostgreSQL"
+      SmtpOptions__Host: "mailhog"
+      SmtpOptions__Port: "1025"
+      SmtpOptions__UseSsl: "false"
+      SmtpOptions__Sender: "noreply@innoshop.local"
+    depends_on:
+      - postgres
+      - mailhog
+
+  productservice:
+    build:
+      context: .
+      dockerfile: ProductService.API/Dockerfile
+    ports:
+      - "5002:8082"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: "Host=postgres;Database=ProductServiceDb;Username=postgres;Password=root"
+      DatabaseProvider: "PostgreSQL"
+      SmtpOptions__Host: "mailhog"
+      SmtpOptions__Port: "1025"
+      SmtpOptions__UseSsl: "false"
+      SmtpOptions__Sender: "noreply@innoshop.local"
+    depends_on:
+      - postgres
+      - mailhog
+
+  postgres:
+    image: postgres:16
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "1025:1025"   
+      # SMTP
+      - "8025:8025"   
+      # Web
+
+volumes:
+  postgres_data:
