@@ -28,3 +28,9 @@ README.md
 !.git/config
 !.git/packed-refs
 !.git/refs/heads/**
+ProductService.API/
+ProductService.Application/
+ProductService.Domain/
+ProductService.Infrastructure/
+ProductService.IntegrationTests/
+ProductService.Tests/

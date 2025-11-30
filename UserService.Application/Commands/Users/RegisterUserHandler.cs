@@ -66,7 +66,7 @@ namespace UserService.Application.Commands.Users
 
             await emailConfirmationRepository.AddAsync(confirmation);
 
-            await emailSender.SendConfirmationEmailAsync(request.Email, confirmation.Token);
+            await emailSender.SendConfirmationEmailAsync(request.Email, confirmation.Token, user.Id);
 
             return new AuthResponse(accessToken, refreshToken.Token);
         }

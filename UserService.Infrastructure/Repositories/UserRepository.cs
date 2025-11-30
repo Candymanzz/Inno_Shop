@@ -66,5 +66,11 @@ namespace UserService.Infrastructure.Repositories
             appDbContext.Users.Update(user);
             await SaveChangesAsync();
         }
+
+        public async Task ChangeActivateAsync(User user)
+        {
+            appDbContext.Users.Update(user);
+            await SaveChangesAsync();
+        }
     }
 }

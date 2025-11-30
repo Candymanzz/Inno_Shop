@@ -11,8 +11,8 @@ namespace UserService.Infrastructure.Date.Configuration
             builder.HasKey(x => x.Id);
 
             builder.HasOne(x => x.User)
-                   .WithMany()
-                   .HasForeignKey(x => x.UserId);
+                   .WithOne(u => u.EmailConfirmation)
+                   .HasForeignKey<EmailConfirmation>(x => x.UserId);
         }
     }
 }

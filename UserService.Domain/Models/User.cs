@@ -11,7 +11,7 @@
         public bool EmailConfirmed { get; set; } = false;
 
         public List<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
-        public EmailConfirmation EmailConfirmation { get; set; } = new EmailConfirmation();
+        public EmailConfirmation? EmailConfirmation { get; set; }
         public List<PasswordResetToken> PasswordResetTokens { get; set; } = new List<PasswordResetToken>();
     }
 }

@@ -28,6 +28,10 @@ namespace UserService.Infrastructure.Date.Configuration
             builder.Property(u => u.Role)
                 .IsRequired()
                 .HasMaxLength(20);
+
+            builder.HasOne(u => u.EmailConfirmation)
+               .WithOne(ec => ec.User)
+               .HasForeignKey<EmailConfirmation>(ec => ec.UserId);
         }
     }
 }

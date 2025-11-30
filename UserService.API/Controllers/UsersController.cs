@@ -94,11 +94,12 @@ namespace UserService.API.Controllers
             return Ok();
         }
 
-        [HttpPatch("{id:guid}")]
+        [HttpPatch("{id:guid}/change-activate")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> ChangeActivate(Guid id, [FromBody] bool activity)
+        public async Task<IActionResult> ChangeActivate(Guid id, [FromBody] bool status)
         {
-            throw new Exception();
+            await mediator.Send(new ChangeActivateCommand(id, status));
+            return Ok();
         }
     }
 }

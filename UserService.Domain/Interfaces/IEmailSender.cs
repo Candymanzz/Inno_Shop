@@ -2,7 +2,7 @@
 {
     public interface IEmailSender
     {
-        Task SendConfirmationEmailAsync(string to, string token);
+        Task SendConfirmationEmailAsync(string to, string token, Guid id);
         Task SendResetPasswordEmailAsync(string to, string token);
     }
 }

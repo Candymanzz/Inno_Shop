@@ -5,8 +5,6 @@ using UserService.Application.Commands.Users;
 using UserService.Application.DTOs.AuthDTOs.RequestDTOs;
 using UserService.Application.DTOs.AuthDTOs.ResponseDTOs;
 using UserService.Application.DTOs.UserDTOs;
-using UserService.Application.Services;
-using UserService.Domain.Interfaces;
 
 namespace UserService.API.Controllers
 {

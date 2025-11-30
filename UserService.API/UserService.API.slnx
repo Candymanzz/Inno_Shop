@@ -1,8 +1,10 @@
 <Solution>
-  <Project Path="../ProductService.Api/ProductService.Api.csproj" DisplayName="ProductService.API" Id="242f3ad7-4107-4b44-95e4-f239c679c581" />
+  <Project Path="../ProductService.Api/ProductService.Api.csproj" Id="e0e047bc-7870-400b-a0f5-eca9914575bb" />
   <Project Path="../ProductService.Application/ProductService.Application.csproj" Id="dc7609c6-6d30-4f4e-8095-c3bc068ce92e" />
   <Project Path="../ProductService.Domain/ProductService.Domain.csproj" Id="7727adde-8198-42e4-ada1-b1340b8475dd" />
   <Project Path="../ProductService.Infrastructure/ProductService.Infrastructure.csproj" Id="cfa9d929-3b6d-4247-b1d8-14f38c3f50f1" />
+  <Project Path="../ProductService.IntegrationTests/ProductService.IntegrationTests.csproj" Id="aeaed540-d8eb-4e23-a9f6-16d536a352d5" />
+  <Project Path="../ProductService.Tests/ProductService.Tests.csproj" Id="329318d8-349f-47e9-be39-296c9785bc57" />
   <Project Path="../UserService.Application/UserService.Application.csproj" />
   <Project Path="../UserService.Domain/UserService.Domain.csproj" />
   <Project Path="../UserService.Infrastructure/UserService.Infrastructure.csproj" />

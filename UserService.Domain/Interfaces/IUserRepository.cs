@@ -11,5 +11,6 @@ namespace UserService.Domain.Interfaces
         Task DeleteAsync(User user);
         Task SaveChangesAsync();
         Task<(IEnumerable<User> Items, int Total)> GetPagedAsync(int page, int pageSize, string? q = null);
+        Task ChangeActivateAsync(User user);
     }
 }

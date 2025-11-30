@@ -22,7 +22,7 @@ namespace UserService.Application.Commands.Users
                 throw new Exception("User not found.");
             }
 
-            await userRepository.UpdateAsync(user);
+            await userRepository.DeleteAsync(user);
 
             return Unit.Value;
         }

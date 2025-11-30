@@ -12,11 +12,12 @@ namespace UserService.Application.Services
             frontendUrl = options.Value.Url;
         }
 
-        public Task SendConfirmationEmailAsync(string to, string token)
+        public Task SendConfirmationEmailAsync(string to, string token, Guid id)
         {
             string confirmationLink = $"{frontendUrl}/api/auth/confirm-email?token={token}";
 
             Console.WriteLine($"[DEBUG] Email to={to}");
+            Console.WriteLine($"[DEBUG] User id={id}");
             Console.WriteLine($"[DEBUG] Confirm your account: {confirmationLink}");
 
             return Task.CompletedTask;
